@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
 
+// import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
+// import thunk from 'redux-thunk';
+
 import svgPanZoom from 'svg-pan-zoom'
 
 // import {Helmet} from "react-helmet";
@@ -18,12 +21,13 @@ import About from './About';
 import LogIn from './LogIn';
 import Home from './Home';
 
-class AppContainer extends React.Component {
+class AppContainer extends Component {
   constructor(props) 
   {
     super(props);
+    console.log(props, this.props);
     this.props.fetchPath();
-
+    this.props.initFirebase();
     // this.state = {
     //   route: ''
     // };
@@ -91,6 +95,7 @@ class AppContainer extends React.Component {
   }
 }
 
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch);
 }
@@ -100,13 +105,20 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 	console.log(state);
   return {
+    ...state,
   	route: window.location.hash.substr(1),
     path: state.path,
     userInfo: state.userInfo,
     visualls: state.visualls
   }
+  // return state;
 }
 
 // This function attaches the state and actions to AppContainer, 
 // which are accessible as props.
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+// console.log(AppContainer);
+// export default connect((state) => { return state }, mapDispatchToProps)(AppContainer);
+
+// export default connect(mapDispatchToProps)(AppContainer);
+// export default AppContainer

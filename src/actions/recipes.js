@@ -17,8 +17,20 @@ export function fetchRecipes(ingredients) {
   }
 }
 
-export function initFirebase(idToken, accessToken) {
+export function initFirebase() {
   firebase.initializeApp(firebaseConfig);
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("User is signed in:", user);
+      initVisuallFromFirebaseUser(user);
+    } else {
+      console.log("User is NOT signed in.");
+    }
+  })
+}
+
+export function initFirebaseFromProvider(idToken, accessToken) {
+  // firebase.initializeApp(firebaseConfig);
   return (dispatch, getState) => {
     myCredential(idToken, accessToken)
       .then((user) => {
@@ -72,35 +84,6 @@ export function initVisuallFromFirebaseUser(firebaseUser) {
       })
   }
 }
-
-// export function initVisuallFromFirebaseUser(firebaseUser) {
-//   return (dispatch, getState) => {
-//      return dispatch(setFirebaseUser(firebaseUser))
-//      .then( (userInfo) => {
-//         return dispatch( setUserInfo(userInfo) );
-//       })
-//   }
-// }
-
-// export function setFirebaseUser(firebaseUser) {
-//   return {
-//     type: types.SET_FIREBASE_USER,
-//     firebaseUser: firebaseUser
-//   }
-// }
-
-// function fetchVisuallUserInfo(user) {
-//   var ref = firebase.database().ref("version_01/users/" + user.uid);
-//   return ref.once('value')
-//     .then((snapshot) => {
-//       console.log(snapshot.val());
-//       return Promise.resolve({key: snapshot.key, ...snapshot.val()});
-//     })
-//     .catch((error) => {
-//       return Promise.error(error);
-//     });
-// }
-
 
 export function loadVisuall(key) {
   return {
