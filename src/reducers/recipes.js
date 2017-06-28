@@ -10,6 +10,15 @@ export const path = createReducer({}, {
   }
 });
 
+export const firebaseUser = createReducer({}, {
+  [types.SET_FIREBASE_USER](state, action) {
+    let newState = {};
+    newState = {...action.firebaseUser};
+    console.log('reducers/recipes.js', newState);
+    return newState;
+  }
+});
+
 // export const navigation = createReducer({}, {
 //   [types.LOAD_VISUALL](state, action) {
 //     console.log('in recipes.js, LOAD_VISUALL key:', action.key);
@@ -17,22 +26,22 @@ export const path = createReducer({}, {
 //   }
 // });
 
-// export const userInfo = createReducer({}, {
-//   [types.SET_USER_INFO](state, action) {
-//     let newState = {};
-//     newState = {...action.userInfo};
-//     return newState;
-//   }
-// });
+export const userInfo = createReducer({}, {
+  [types.SET_USER_INFO](state, action) {
+    let newState = {};
+    newState = {...action.userInfo};
+    return newState;
+  }
+});
 
-// // Add news key of 'visualls' to state tree
-// export const visualls = createReducer({}, {
-//   [types.SET_VISUALL_METADATA](state, action) {
-//     let newState = {...state};
-//     newState[action.metadata.key] = action.metadata;
-//     return newState;
-//   }
-// });
+// Add news key of 'visualls' to state tree
+export const visualls = createReducer({}, {
+  [types.SET_VISUALL_METADATA](state, action) {
+    let newState = {...state};
+    newState[action.metadata.key] = action.metadata;
+    return newState;
+  }
+});
 
 // export const recipeCount = createReducer(-1, {
 //   [types.ADD_RECIPE](state, action){

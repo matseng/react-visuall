@@ -45,8 +45,6 @@ class AppContainer extends React.Component {
 
 
   render() {
-    console.log('in AppContainer render 2', this.props.params.filter);
-    console.log('in AppContainer, gapi:', window.gapi);
 
   	let Child
 
@@ -67,10 +65,11 @@ class AppContainer extends React.Component {
               <li><Link to="/about">About</Link></li>
               <li><Link to="/login">Log In | Sign Up</Link></li>
 
+
             </ul>
           </div>
           <div>
-            <Child/>
+            <Child {...this.props} />
           </div>
        </SplitPane>
 

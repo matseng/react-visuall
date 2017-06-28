@@ -1,5 +1,5 @@
 import * as types from './types'
-// import * as firebase from 'firebase';
+import * as firebase from 'firebase';
 import firebaseConfig from '../config/FirebaseConfig';
 
 export function fetchPath() {
@@ -10,7 +10,7 @@ export function fetchPath() {
   }
 }
 
-/*
+
 export function fetchRecipes(ingredients) {
   return (dispatch, getState) => {
     console.log(getState);
@@ -20,7 +20,7 @@ export function fetchRecipes(ingredients) {
 export function initFirebase(idToken, accessToken) {
   firebase.initializeApp(firebaseConfig);
   return (dispatch, getState) => {
-    myCredential(idToken, accessToken)  // TODO (Jun 8, 2017): re-write with promises
+    myCredential(idToken, accessToken)
       .then((user) => {
         return fetchUserInfo(user);
       })
@@ -46,6 +46,61 @@ export function initFirebase(idToken, accessToken) {
       })
   }
 }
+
+export function initVisuallFromFirebaseUser(firebaseUser) {
+  return (dispatch, getState) => {
+      return fetchUserInfo(firebaseUser)
+      .then( (userInfo) => {
+        return dispatch( setUserInfo(userInfo) );
+      })
+      .then(() => {
+        return Promise.all(
+          Object.keys(getState().userInfo['visualls-personal']).map( key => {
+            return fetchVisuallMetadata(key)
+              .then((metadata) => {
+                return dispatch( setVisuallMetadata({key: key, ...metadata}));
+              })
+          })
+        );
+      })
+      .then((visuallMetadata)=> {
+        console.log('all visuall metadata dispatched with new state ', getState());
+      })
+      .catch((error) => {
+        console.log('Account disabled x 2');
+        console.log(error);
+      })
+  }
+}
+
+// export function initVisuallFromFirebaseUser(firebaseUser) {
+//   return (dispatch, getState) => {
+//      return dispatch(setFirebaseUser(firebaseUser))
+//      .then( (userInfo) => {
+//         return dispatch( setUserInfo(userInfo) );
+//       })
+//   }
+// }
+
+// export function setFirebaseUser(firebaseUser) {
+//   return {
+//     type: types.SET_FIREBASE_USER,
+//     firebaseUser: firebaseUser
+//   }
+// }
+
+// function fetchVisuallUserInfo(user) {
+//   var ref = firebase.database().ref("version_01/users/" + user.uid);
+//   return ref.once('value')
+//     .then((snapshot) => {
+//       console.log(snapshot.val());
+//       return Promise.resolve({key: snapshot.key, ...snapshot.val()});
+//     })
+//     .catch((error) => {
+//       return Promise.error(error);
+//     });
+// }
+
 
 export function loadVisuall(key) {
   return {
@@ -76,6 +131,7 @@ export function setVisuallMetadata(metadata) {
 }
 
 function myCredential(idToken, accessToken) {
+  console.log('myCredential', idToken, accessToken);
   const credential = firebase
       .auth
       .GoogleAuthProvider
@@ -99,7 +155,6 @@ function fetchUserInfo(user) {
   var ref = firebase.database().ref("version_01/users/" + user.uid);
   return ref.once('value')
     .then((snapshot) => {
-      console.log(snapshot.val());
       return Promise.resolve({key: snapshot.key, ...snapshot.val()});
     })
     .catch((error) => {
@@ -117,5 +172,3 @@ function fetchVisuallMetadata(key) {
       return Promise.error(error);
     });
 }
-
-*/
