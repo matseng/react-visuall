@@ -32,7 +32,7 @@ class AppContainer extends React.Component {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         console.log("User is signed in:", user);
-        // this.props.initVisuallFromFirebaseUser(user);
+        props.initVisuallFromFirebaseUser(user);  // this.props is undefined bc in an anonymous function
       } else {
         console.log("User is NOT signed in.");
 
