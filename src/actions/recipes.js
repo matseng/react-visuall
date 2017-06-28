@@ -17,7 +17,7 @@ export function fetchRecipes(ingredients) {
   }
 }
 
-export function initFirebase(idToken, accessToken) {
+export function initFirebaseFromProvider(idToken, accessToken) {
   firebase.initializeApp(firebaseConfig);
   return (dispatch, getState) => {
     myCredential(idToken, accessToken)
@@ -72,6 +72,9 @@ export function initVisuallFromFirebaseUser(firebaseUser) {
       })
   }
 }
+
+
+
 
 // export function initVisuallFromFirebaseUser(firebaseUser) {
 //   return (dispatch, getState) => {

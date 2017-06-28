@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
 
+import * as firebase from 'firebase';
+import firebaseConfig from '../config/FirebaseConfig';
+
 import svgPanZoom from 'svg-pan-zoom'
 
 // import {Helmet} from "react-helmet";
@@ -24,9 +27,18 @@ class AppContainer extends React.Component {
     super(props);
     this.props.fetchPath();
 
-    // this.state = {
-    //   route: ''
-    // };
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("User is signed in:", user);
+        // this.props.initVisuallFromFirebaseUser(user);
+      } else {
+        console.log("User is NOT signed in.");
+
+        // No user is signed in.
+      }
+    });
 
   }
 
@@ -38,7 +50,6 @@ class AppContainer extends React.Component {
     //   })
     // })
     var panZoomTiger = svgPanZoom('#demo-tiger');
-    console.log("componentDidMount");
   }
 
     // <meta name="google-signin-client_id" content="547811396909-ogmv8sa55pcmo0cpt0vh1397qfh4fh52.apps.googleusercontent.com" />
@@ -98,7 +109,7 @@ function mapDispatchToProps(dispatch) {
 // Defines what state values map to props
 // render method will be called upon change in props
 function mapStateToProps(state) {
-	console.log(state);
+	// console.log(state);
   return {
   	route: window.location.hash.substr(1),
     path: state.path,
