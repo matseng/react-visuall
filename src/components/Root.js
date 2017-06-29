@@ -16,7 +16,8 @@ class Root extends React.Component {
     return (
 	  <Provider store={this.props.store}>
 	    <Router history={browserHistory}>
-	      <Route path="/(:filter)" component={AppContainer} />
+	      {/* <Route path="/(:filter)" component={AppContainer} />  */}
+	      <Route path="*/(:filter)" component={AppContainer} />
 	    </Router>
 	  </Provider>
 	)

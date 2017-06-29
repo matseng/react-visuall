@@ -24,6 +24,7 @@ import Home from './Home';
 class AppContainer extends React.Component {
   constructor(props) 
   {
+    console.log('AppContainer constructor');
     super(props);
     this.props.fetchPath();
 
@@ -44,7 +45,7 @@ class AppContainer extends React.Component {
 
   componentDidMount() {
     console.log('AppContiner.js: ', this.props.params.filter);
-    
+
     window.addEventListener('hashchange', () => {
     	console.log('componentDidMount: ', window.location.hash.substr(1));
     //   this.setState({
@@ -95,7 +96,7 @@ class AppContainer extends React.Component {
 
         <div style={{flex: 1, background: 'azure'}}>
           <svg id="demo-tiger" style={{width:'100%', height: window.innerHeight}}>
-            <g class="svg-pan-zoom_viewport">
+            <g className="svg-pan-zoom_viewport">
               <Eye size='0' {...this.props} />
               <Eye2 size='200' {...this.props} />
             </g>
