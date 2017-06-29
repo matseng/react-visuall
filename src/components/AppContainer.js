@@ -50,7 +50,7 @@ class AppContainer extends React.Component {
     //   })
     // })
     var panZoomTiger = svgPanZoom('#demo-tiger');
-    panZoomTiger.zoom(1)
+    // panZoomTiger.zoom(1)
     // panZoomTiger.resize(); // update SVG cached size and controls positions
     // panZoomTiger.fit();
     // panZoomTiger.center();
@@ -93,10 +93,10 @@ class AppContainer extends React.Component {
 
         <div style={{flex: 1, background: 'azure'}}>
           <svg id="demo-tiger" style={{width:'100%', height: window.innerHeight}}>
-            <g id="svg-pan-zoom_viewport" >
-              <Eye size='200'/>
+
+              <Eye size='200' {...this.props} />
               <Eye2 size='200' {...this.props} />
-            </g>
+            
           </svg>
           {/* <hr/>  */}
 
