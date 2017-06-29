@@ -20,6 +20,7 @@ import Eye2 from './Eye2';
 import About from './About';
 import LogIn from './LogIn';
 import Home from './Home';
+import Visuall from './Visuall';
 
 class AppContainer extends React.Component {
   constructor(props) 
@@ -40,6 +41,15 @@ class AppContainer extends React.Component {
         // No user is signed in.
       }
     });
+    // console.log(this);
+    try {
+      this.props.history.listen((location, action) => {
+        const urlPathArray = window.location.pathname.split('/').slice(1);
+        console.log('AppContiner.js, on rount change: ', this.props, urlPathArray);
+      })
+    } catch(err){
+      console.log(err);
+    }
 
   }
 
@@ -47,7 +57,7 @@ class AppContainer extends React.Component {
     console.log('AppContiner.js: ', this.props.params.filter);
 
     window.addEventListener('hashchange', () => {
-    	console.log('componentDidMount: ', window.location.hash.substr(1));
+    	console.log('AppContiner.js, componentDidMount: ', window.location.hash.substr(1));
     //   this.setState({
     //     route: window.location.hash.substr(1)
     //   })
@@ -66,12 +76,18 @@ class AppContainer extends React.Component {
 
     // <meta name="google-signin-client_id" content="547811396909-ogmv8sa55pcmo0cpt0vh1397qfh4fh52.apps.googleusercontent.com" />
 
+  handleOnClick(urlPathArray) {
+    console.log('AppContiner.js: handleOnClick', urlPathArray);
+  }
 
   render() {
 
   	let Child;
-    console.log('AppContiner.js: ', this.props.params.filter);
-    switch (this.props.params.filter) {
+    // console.log('AppContiner.js: ', this.props.params.filter);
+    const urlPathArray = window.location.pathname.split('/').slice(1);
+    // console.log('AppContiner.js: ', urlPathArray);
+
+    switch (urlPathArray[0]) {
       case 'about': Child = About; break;
       case 'login': Child = LogIn; break;
       default: Child = Home;
@@ -84,7 +100,7 @@ class AppContainer extends React.Component {
           <div>
             <h1>Visuall</h1>
             <ul>
-              <li><Link to="/home">Home</Link></li>
+              <li><Link to={"/home"} onClick={this.handleOnClick.bind(this, urlPathArray)} >Home</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/login">Log In | Sign Up</Link></li>
             </ul>
@@ -95,6 +111,7 @@ class AppContainer extends React.Component {
        </SplitPane>
 
         <div style={{flex: 1, background: 'azure'}}>
+          <Visuall/>
           <svg id="demo-tiger" style={{width:'100%', height: window.innerHeight}}>
             <g className="svg-pan-zoom_viewport">
               <Eye size='0' {...this.props} />
@@ -114,6 +131,14 @@ class AppContainer extends React.Component {
   }
 }
 
+AppContainer.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+// Root.propTypes = {
+//   store: PropTypes.object.isRequired
+// }
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch);
 }
@@ -122,6 +147,7 @@ function mapDispatchToProps(dispatch) {
 // render method will be called upon change in props
 function mapStateToProps(state) {
 	// console.log(state);
+  return state;
   return {
   	route: window.location.hash.substr(1),
     path: state.path,

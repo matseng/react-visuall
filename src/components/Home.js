@@ -25,8 +25,8 @@ class Home extends React.Component {
         </li>)
 
 
-    })
-    console.log(listItems);
+    });
+    
     return (
       <div>
       {listItems}

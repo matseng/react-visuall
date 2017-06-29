@@ -17,6 +17,15 @@ export function fetchRecipes(ingredients) {
   }
 }
 
+export function setUrlPath(urlPathArray) {
+  return (dispatch, getState) => {
+    dispatch ({
+      type: types.SET_URL_PATH,
+      urlPath: urlPathArray
+    })
+  }
+}
+
 export function initFirebaseFromProvider(idToken, accessToken) {
   firebase.initializeApp(firebaseConfig);
   return (dispatch, getState) => {

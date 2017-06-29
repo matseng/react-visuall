@@ -12,3 +12,5 @@ export const FETCH_PATH = 'FETCH_PATH';
 
 export const SET_FIREBASE_USER = 'SET_FIREBASE_USER';
 
+export const SET_URL_PATH = 'SET_URL_PATH';
+
