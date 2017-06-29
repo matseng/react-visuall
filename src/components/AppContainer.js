@@ -50,6 +50,13 @@ class AppContainer extends React.Component {
     //   })
     // })
     var panZoomTiger = svgPanZoom('#demo-tiger');
+    panZoomTiger.zoom(1)
+    // panZoomTiger.resize(); // update SVG cached size and controls positions
+    // panZoomTiger.fit();
+    // panZoomTiger.center();
+
+
+
   }
 
     // <meta name="google-signin-client_id" content="547811396909-ogmv8sa55pcmo0cpt0vh1397qfh4fh52.apps.googleusercontent.com" />
@@ -84,9 +91,9 @@ class AppContainer extends React.Component {
           </div>
        </SplitPane>
 
-        <div>
-          <svg id="demo-tiger">
-            <g id="svg-pan-zoom_viewport">
+        <div style={{flex: 1, background: 'azure'}}>
+          <svg id="demo-tiger" style={{width:'100%', height: window.innerHeight}}>
+            <g id="svg-pan-zoom_viewport" >
               <Eye size='200'/>
               <Eye2 size='200' {...this.props} />
             </g>
