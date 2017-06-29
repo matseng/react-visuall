@@ -126,7 +126,7 @@ export function setUserInfo(userInfo) {
 }
 
 export function setVisuallMetadata(metadata) {
-  console.log('test setVisuallMetadata', metadata);
+  // console.log('test setVisuallMetadata', metadata);
   return {
     type: types.SET_VISUALL_METADATA,
     metadata: {...metadata}

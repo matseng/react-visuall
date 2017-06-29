@@ -43,14 +43,18 @@ class AppContainer extends React.Component {
   }
 
   componentDidMount() {
-    // window.addEventListener('hashchange', () => {
-    // 	console.log('componentDidMount: ', window.location.hash.substr(1));
+    console.log('AppContiner.js: ', this.props.params.filter);
+    
+    window.addEventListener('hashchange', () => {
+    	console.log('componentDidMount: ', window.location.hash.substr(1));
     //   this.setState({
     //     route: window.location.hash.substr(1)
     //   })
-    // })
+    })
     var panZoomTiger = svgPanZoom('#demo-tiger');
-    // panZoomTiger.zoom(1)
+    // panZoomTiger.pan({x: 50, y: 50})
+
+    panZoomTiger.resetZoom();
     // panZoomTiger.resize(); // update SVG cached size and controls positions
     // panZoomTiger.fit();
     // panZoomTiger.center();
@@ -64,8 +68,8 @@ class AppContainer extends React.Component {
 
   render() {
 
-  	let Child
-
+  	let Child;
+    console.log('AppContiner.js: ', this.props.params.filter);
     switch (this.props.params.filter) {
       case 'about': Child = About; break;
       case 'login': Child = LogIn; break;
@@ -82,8 +86,6 @@ class AppContainer extends React.Component {
               <li><Link to="/home">Home</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/login">Log In | Sign Up</Link></li>
-
-
             </ul>
           </div>
           <div>
@@ -93,12 +95,14 @@ class AppContainer extends React.Component {
 
         <div style={{flex: 1, background: 'azure'}}>
           <svg id="demo-tiger" style={{width:'100%', height: window.innerHeight}}>
-
-              <Eye size='200' {...this.props} />
+            <g class="svg-pan-zoom_viewport">
+              <Eye size='0' {...this.props} />
               <Eye2 size='200' {...this.props} />
+            </g>
             
           </svg>
           {/* <hr/>  */}
+
 
         </div>
 
