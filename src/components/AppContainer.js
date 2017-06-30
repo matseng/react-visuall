@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
 
 import * as firebase from 'firebase';
 import firebaseConfig from '../config/FirebaseConfig';
@@ -42,14 +42,14 @@ class AppContainer extends React.Component {
       }
     });
     // console.log(this);
-    try {
-      this.props.history.listen((location, action) => {
-        const urlPathArray = window.location.pathname.split('/').slice(1);
-        console.log('AppContiner.js, on rount change: ', this.props, urlPathArray);
-      })
-    } catch(err){
-      console.log(err);
-    }
+    // try {
+    //   this.props.history.listen((location, action) => {
+    //     const urlPathArray = window.location.pathname.split('/').slice(1);
+    //     console.log('AppContiner.js, on route change: ', this, urlPathArray);
+    //   })
+    // } catch(err){
+    //   console.log(err);
+    // }
 
   }
 
@@ -81,6 +81,7 @@ class AppContainer extends React.Component {
   }
 
   render() {
+    console.log('AppContiner.js, render, params:', this.props.params);
 
   	let Child;
     // console.log('AppContiner.js: ', this.props.params.filter);
@@ -111,7 +112,7 @@ class AppContainer extends React.Component {
        </SplitPane>
 
         <div style={{flex: 1, background: 'azure'}}>
-          <Visuall/>
+          <Visuall myKey={this.props.params}/>
           <svg id="demo-tiger" style={{width:'100%', height: window.innerHeight}}>
             <g className="svg-pan-zoom_viewport">
               <Eye size='0' {...this.props} />
@@ -158,4 +159,4 @@ function mapStateToProps(state) {
 
 // This function attaches the state and actions to AppContainer, 
 // which are accessible as props.
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppContainer));
